@@ -8,7 +8,7 @@ echo "+++ TRANSFER-CLI INSTALLATION +++"
 sleep 1
 sudo wget https://raw.githubusercontent.com/RajaRakoto/transfer-cli/master/transfer-cli -O /usr/local/bin/transfer-cli
 sudo chmod a+rx /usr/local/bin/transfer-cli
-rm transfer-setup.sh
+rm transfer-setup
 echo "+++ VERSION CHECKING +++"
 sleep 1
 transfer-cli --version
