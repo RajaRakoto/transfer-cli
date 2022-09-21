@@ -11,6 +11,18 @@ example="\n\ttransfer-cli --upload-gpg file.txt\n
 "
 
 ### TODO: done
+function transfer-banner() {
+    akory -d .005 " _                        __                     _ _ "
+    akory -d .005 "| |_ _ __ __ _ _ __  ___ / _| ___ _ __       ___| (_)"
+    akory -d .005 "| __| '__/ _  | '_ \/ __| |_ / _ \ '__|____ / __| | |"
+    akory -d .005 "| |_| | | (_| | | | \__ \  _|  __/ | |_____| (__| | |"
+    akory -d .005 " \__|_|  \__,_|_| |_|___/_|  \___|_|        \___|_|_|"
+    echo ''
+    akory -d .02 "Version: $version"
+    akory -d .02 "Author: $author"
+}
+
+### TODO: done
 function try() {
     [[ $- = *e* ]]
     SAVED_OPT_E=$?
@@ -32,18 +44,6 @@ function catch() {
 ### TODO: done
 function throwErrors() {
     set -e
-}
-
-### TODO: done
-function transfer-banner() {
-    akory -d .005 " _                        __                     _ _ "
-    akory -d .005 "| |_ _ __ __ _ _ __  ___ / _| ___ _ __       ___| (_)"
-    akory -d .005 "| __| '__/ _  | '_ \/ __| |_ / _ \ '__|____ / __| | |"
-    akory -d .005 "| |_| | | (_| | | | \__ \  _|  __/ | |_____| (__| | |"
-    akory -d .005 " \__|_|  \__,_|_| |_|___/_|  \___|_|        \___|_|_|"
-    echo ''
-    akory -d .02 "Version: $version"
-    akory -d .02 "Author: $author"
 }
 
 ### TODO: done
@@ -80,9 +80,15 @@ function transfer-upload-gpg() {
         (
             throwErrors
             cat "$2" | gpg -ac -o- | curl -v --progress-bar -X PUT --upload-file "-" https://transfer.sh/"$2" >~/.transfer.tmp
-            date=$(date '+%Y-%m-%d|%H:%M:%S')
+            date=$(date '+%Y-%m-%d | %H:%M:%S')
             read -p "File description: " file_description
-            echo "[$date][$file_description] -> $(head ~/.transfer.tmp)" >>~/.transfer.log
+            read -p "Paste the 'x-url-delete' value above: " delete_token 
+            echo -e "\n=====================================================================" >>~/.transfer.log
+            echo "[URL] -> $(head ~/.transfer.tmp)" >>~/.transfer.log
+            echo "[DATE] -> $date" >>~/.transfer.log
+            echo "[DESCRIPTION] -> $file_description" >>~/.transfer.log
+            echo "[X-URL-DELETE] -> $delete_token" >>~/.transfer.log
+            echo -e "=====================================================================" >>~/.transfer.log
             rm ~/.transfer.tmp
             transfer-list
             akory -d .02 'File uploaded ... [done]'
@@ -111,7 +117,7 @@ function transfer-download-gpg() {
     try
     (
         throwErrors
-        curl --progress-bar "$2" | gpg -o- >"$3"
+        curl -v --progress-bar "$2" | gpg -o- >"$3"
         akory -d .02 'File downloaded ... [done]'
     )
     catch || {
