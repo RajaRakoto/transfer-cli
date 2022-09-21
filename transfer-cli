@@ -53,7 +53,20 @@ function transfer-list() {
 
 ### TODO: done
 function transfer-edit() {
-    xdg-open ~/.transfer.log
+    try
+    (
+        throwErrors
+        xdg-open ~/.transfer.log
+    )
+    catch || {
+        case $ex_code in
+        *)
+            akory -d .02 'xdg-open not found'
+            nano ~/.transfer.log
+            throw $ex_code
+            ;;
+        esac
+    }
 }
 
 ### TODO: done
@@ -82,7 +95,7 @@ function transfer-upload-gpg() {
             cat "$2" | gpg -ac -o- | curl -v --progress-bar -X PUT --upload-file "-" https://transfer.sh/"$2" >~/.transfer.tmp
             date=$(date '+%Y-%m-%d | %H:%M:%S')
             read -p "File description: " file_description
-            read -p "Paste the 'x-url-delete' value above: " delete_token 
+            read -p "Paste the 'x-url-delete' value above: " delete_token
             echo -e "\n=====================================================================" >>~/.transfer.log
             echo "[URL] -> $(head ~/.transfer.tmp)" >>~/.transfer.log
             echo "[DATE] -> $date" >>~/.transfer.log
