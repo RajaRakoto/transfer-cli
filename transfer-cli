@@ -53,7 +53,13 @@ function transfer-list() {
 
 ### TODO: done
 function transfer-clear() {
-    echo '' >~/.transfer.log && transfer-list && akory -d .02 'transfer log cleared ... [done]'
+    read -p "Are you sure to clear transfer log (Y/N)? " -n 1 -r
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        transfer-list
+        exit 1
+    else
+        echo '' >~/.transfer.log && transfer-list && akory -d .02 'transfer log cleared ... [done]'
+    fi
 }
 
 ### TODO: done
