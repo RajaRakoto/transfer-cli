@@ -36,14 +36,14 @@ function throwErrors() {
 
 ### TODO: done
 function transfer-banner() {
-    akory -d 0.005 " _                        __                     _ _ "
-    akory -d 0.005 "| |_ _ __ __ _ _ __  ___ / _| ___ _ __       ___| (_)"
-    akory -d 0.005 "| __| '__/ _  | '_ \/ __| |_ / _ \ '__|____ / __| | |"
-    akory -d 0.005 "| |_| | | (_| | | | \__ \  _|  __/ | |_____| (__| | |"
-    akory -d 0.005 " \__|_|  \__,_|_| |_|___/_|  \___|_|        \___|_|_|"
+    akory -d .005 " _                        __                     _ _ "
+    akory -d .005 "| |_ _ __ __ _ _ __  ___ / _| ___ _ __       ___| (_)"
+    akory -d .005 "| __| '__/ _  | '_ \/ __| |_ / _ \ '__|____ / __| | |"
+    akory -d .005 "| |_| | | (_| | | | \__ \  _|  __/ | |_____| (__| | |"
+    akory -d .005 " \__|_|  \__,_|_| |_|___/_|  \___|_|        \___|_|_|"
     echo ''
-    akory -d 0.02 "Version: $version"
-    akory -d 0.02 "Author: $author"
+    akory -d .02 "Version: $version"
+    akory -d .02 "Author: $author"
 }
 
 ### TODO: done
@@ -53,33 +53,34 @@ function transfer-list() {
 
 ### TODO: done
 function transfer-clear() {
-    echo '' >~/.transfer.log && transfer-list && akory -d 0.02 'transfer log cleared ... [done]'
+    echo '' >~/.transfer.log && transfer-list && akory -d .02 'transfer log cleared ... [done]'
 }
 
 ### TODO: done
 function transfer-upload-gpg() {
     if [ -z "$2" ]; then
-        akory -d 0.02 "Please provide a file to upload (eg: file.txt)"
+        akory -d .02 "Please provide a file to upload (eg: file.txt)"
         exit 1
     elif [ ! -f "$2" ]; then
-        akory -d 0.02 "This file does not exist: $2"
+        akory -d .02 "This file does not exist: $2"
         exit 1
     else
         try
         (
             throwErrors
             cat "$2" | gpg -ac -o- | curl --progress-bar -X PUT --upload-file "-" https://transfer.sh/"$2" >~/.transfer.tmp
-            date=$(date '+%Y-%m-%d')
-            echo "[$(date)] -> $(head ~/.transfer.tmp)" >>~/.transfer.log
+            date=$(date '+%Y-%m-%d|%H:%M:%S')
+            read -p "File description: " file_description
+            echo "[$date][$file_description] -> $(head ~/.transfer.tmp)" >>~/.transfer.log
             rm ~/.transfer.tmp
             transfer-list
-            akory -d 0.02 'File uploaded ... [done]'
+            akory -d .02 'File uploaded ... [done]'
         )
         catch || {
             case $ex_code in
             *)
-                akory -d 0.02 'File upload ... [failed]'
-                akory -d 0.02 'Type "transfer-cli --help" for more information'
+                akory -d .02 'File upload ... [failed]'
+                akory -d .02 'Type "transfer-cli --help" for more information'
                 throw $ex_code
                 ;;
             esac
@@ -90,23 +91,23 @@ function transfer-upload-gpg() {
 ### TODO: working
 function transfer-download-gpg() {
     if [ -z "$2" ]; then
-        akory -d 0.02 "Please specify a URL file from transfer.sh (example: https://transfer.sh/XGYxVc/file.txt)"
+        akory -d .02 "Please specify a URL file from transfer.sh (example: https://transfer.sh/XGYxVc/file.txt)"
         exit 1
     elif [ -z "$3" ]; then
-        akory -d 0.02 "Please specify a file name to save the downloaded file as (example: file.txt)"
+        akory -d .02 "Please specify a file name to save the downloaded file as (example: file.txt)"
         exit 1
     fi
     try
     (
         throwErrors
         curl --progress-bar "$2" | gpg -o- >"$3"
-        akory -d 0.02 'File downloaded ... [done]'
+        akory -d .02 'File downloaded ... [done]'
     )
     catch || {
         case $ex_code in
         *)
-            akory -d 0.02 'File download ... [failed]'
-            akory -d 0.02 'Type "transfer-cli --help" for more information'
+            akory -d .02 'File download ... [failed]'
+            akory -d .02 'Type "transfer-cli --help" for more information'
             throw $ex_code
             ;;
         esac
@@ -160,7 +161,7 @@ $example
 ### TODO: working
 case $1 in
 -v)
-    akory -d 0.02 $version
+    akory -d .02 $version
     ;;
 --version)
     transfer-banner
