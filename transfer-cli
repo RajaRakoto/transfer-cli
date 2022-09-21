@@ -1,0 +1,172 @@
+#!/bin/bash
+
+version=1.0.0
+author='Raja'
+description='\n\tA minimalist command line tool to facilitate "transfer.sh" usage: upload|download|delete files to/from server with GPG encryption/decryption'
+example="\n\ttransfer-cli --upload-gpg file.txt\n
+\ttransfer-cli --download-gpg https://transfer.sh/XGYxVc/file.txt file.txt\n
+\ttransfer-cli --delete https://transfer.sh/XGYxVc/file.txt\n
+\ttransfer-cli --list\n
+\ttransfer-cli --clear
+"
+
+### TODO: done
+function try() {
+    [[ $- = *e* ]]
+    SAVED_OPT_E=$?
+    set +e
+}
+
+### TODO: done
+function throw() {
+    exit "$1"
+}
+
+### TODO: done
+function catch() {
+    export ex_code=$?
+    (($SAVED_OPT_E)) && set +e
+    return $ex_code
+}
+
+### TODO: done
+function throwErrors() {
+    set -e
+}
+
+### TODO: done
+function transfer-banner() {
+    akory -d 0.005 " _                        __                     _ _ "
+    akory -d 0.005 "| |_ _ __ __ _ _ __  ___ / _| ___ _ __       ___| (_)"
+    akory -d 0.005 "| __| '__/ _  | '_ \/ __| |_ / _ \ '__|____ / __| | |"
+    akory -d 0.005 "| |_| | | (_| | | | \__ \  _|  __/ | |_____| (__| | |"
+    akory -d 0.005 " \__|_|  \__,_|_| |_|___/_|  \___|_|        \___|_|_|"
+    echo ''
+    akory -d 0.02 "Version: $version"
+    akory -d 0.02 "Author: $author"
+}
+
+### TODO: done
+function transfer-list() {
+    cat ~/.transfer.log
+}
+
+### TODO: done
+function transfer-clear() {
+    echo '' >~/.transfer.log && transfer-list && akory -d 0.02 'transfer log cleared ... [done]'
+}
+
+### TODO: apply try ... catch
+function transfer-upload-gpg() {
+    if [ ! -f "$2" ]; then
+        akory -d 0.02 "This file does not exist: $2"
+        exit 1
+    else
+        cat "$2" | gpg -ac -o- | curl --progress-bar -X PUT --upload-file "-" https://transfer.sh/"$2" >~/.transfer.tmp
+        date=$(date '+%Y-%m-%d')
+        echo "[$(date)] -> $(head ~/.transfer.tmp)" >>~/.transfer.log
+        rm ~/.transfer.tmp
+        transfer-list
+        akory -d 0.02 'File uploaded ... [done]'
+    fi
+}
+
+### TODO: working
+function transfer-download-gpg() {
+    if [ -z "$2" ]; then
+        akory -d 0.02 "Please specify a URL file from transfer.sh (example: https://transfer.sh/XGYxVc/file.txt)"
+        exit 1
+    elif [ -z "$3" ]; then
+        akory -d 0.02 "Please specify a file name to save the downloaded file as (example: file.txt)"
+        exit 1
+    fi
+    try
+    (
+        throwErrors
+        curl --progress-bar "$2" | gpg -o- >"$3"
+        akory -d 0.02 'File downloaded ... [done]'
+    )
+    catch || {
+        case $ex_code in
+        *)
+            akory -d 0.02 'File download ... [failed]'
+            akory -d 0.02 'Type "transfer-cli --help" for more information'
+            throw $ex_code
+            ;;
+        esac
+    }
+}
+
+### TODO: get token 
+function transfer-delete() {
+    curl -X DELETE "$2"
+}
+
+### TODO: done
+function transfer-help() {
+    transfer-banner
+    echo -e "
+=====================
+==== DESCRIPTION ====
+=====================
+$description
+
+===============
+==== USAGE ====
+===============
+\n\ttransfer-cli [options] [arguments]...
+
+=================
+==== OPTIONS ====
+=================
+\n\t--upload-gpg <file> -> upload file to transfer.sh with GPG encryption\n
+\t--download-gpg <url> <file> -> download file from transfer.sh with GPG decryption\n
+\t--delete <url> -> delete file from transfer.sh\n
+\t--list -> list all uploaded files from transfer log\n
+\t--clear -> clear transfer log\n
+\t-h, --help -> transfer-cli help\n
+\t-v, --version -> transfer-cli version
+
+==================
+==== EXAMPLES ====
+==================
+$example
+"
+}
+
+### TODO: working
+case $1 in
+-v)
+    akory -d 0.02 $version
+    ;;
+--version)
+    transfer-banner
+    ;;
+-h)
+    echo -e "\n\t============================="
+    echo -e "\t=== TRANSFER-CLI EXAMPLES ==="
+    echo -e "\t============================="
+    echo -e "$example"
+    ;;
+--help)
+    transfer-help
+    ;;
+--upload-gpg)
+    transfer-upload-gpg "$1" "$2"
+    ;;
+--download-gpg)
+    transfer-download-gpg "$1" "$2" "$3"
+    ;;
+--delete)
+    transfer-delete "$1" "$2"
+    ;;
+--list)
+    transfer-list
+    ;;
+--clear)
+    transfer-clear
+    ;;
+*)
+    transfer-help
+    ;;
+esac
