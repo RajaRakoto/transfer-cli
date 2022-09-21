@@ -17,7 +17,7 @@
 ### 📌 Description
 A minimalist command line tool to facilitate "transfer.sh" usage: **upload|download|delete** files to/from server with GPG encryption/decryption
 
-**About transfer.sh**
+**About transfer.sh**<br>
 `Transfer.sh` is a command line utility and public file sharing service. It allows you to upload files from the command line and share them with anyone you want. It is a free, open source, minimalist, and fast service.
 
 ---
