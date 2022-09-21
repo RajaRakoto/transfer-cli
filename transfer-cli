@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version=1.0.2
+version=1.0.3
 author='Raja'
 description='A minimalist command line tool to facilitate "transfer.sh" usage: \nupload|download|delete files to/from server with GPG encryption/decryption'
 example="\n\ttransfer-cli -u file.txt\n
@@ -135,7 +135,7 @@ function transfer-download() {
 ### TODO: add deleted status
 function transfer--delete() {
     curl -X DELETE "$2"
-    alory .02 "TIPS: You can delete the file information from transfer log by typing 'transfer-cli -e', this allows you to keep log clean ..."
+    akory .02 "TIPS: You can delete the file information from transfer log by typing 'transfer-cli -e', this allows you to keep log clean ..."
 }
 
 function transfer-help() {
