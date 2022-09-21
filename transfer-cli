@@ -3,11 +3,9 @@
 version=1.0.0
 author='Raja'
 description='A minimalist command line tool to facilitate "transfer.sh" usage: \nupload|download|delete files to/from server with GPG encryption/decryption'
-example="\n\ttransfer-cli --upload-gpg file.txt\n
-\ttransfer-cli --download-gpg https://transfer.sh/XGYxVc/file.txt file.txt\n
-\ttransfer-cli --delete https://transfer.sh/XGYxVc/file.txt\n
-\ttransfer-cli --list\n
-\ttransfer-cli --clear
+example="\n\ttransfer-cli -u file.txt\n
+\ttransfer-cli -d https://transfer.sh/3Q2Zg/file.txt\n
+\ttransfer-cli --del https://transfer.sh/3Q2Zg/file.txt/PHYIiRBAnwap\n
 "
 
 function transfer-banner() {
@@ -72,7 +70,7 @@ function transfer-clear() {
     fi
 }
 
-function transfer-upload-gpg() {
+function transfer-upload() {
     if [ -z "$2" ]; then
         akory -d .02 "Please provide a file to upload (eg: file.txt)"
         exit 1
@@ -110,7 +108,7 @@ function transfer-upload-gpg() {
 }
 
 ### TODO: fix GPG warning
-function transfer-download-gpg() {
+function transfer-download() {
     if [ -z "$2" ]; then
         akory -d .02 "Please specify a URL file from transfer.sh (example: https://transfer.sh/XGYxVc/file.txt)"
         exit 1
@@ -135,7 +133,7 @@ function transfer-download-gpg() {
 }
 
 ### TODO: add deleted status
-function transfer-delete() {
+function transfer--delete() {
     curl -X DELETE "$2"
 }
 
@@ -162,14 +160,21 @@ $description
 =================
 ==== OPTIONS ====
 =================
-\n\t--upload-gpg <file>  |  upload file to transfer.sh with GPG encryption\n
-\t--download-gpg <url-download>  |  download file from transfer.sh with GPG decryption\n
-\t--delete <url-delete>  |  delete file from transfer.sh\n
-\t--list  |  list all uploaded files from transfer log\n
-\t--edit  |  edit transfer log\n
-\t--clear  |  clear transfer log\n
+\n\t-u, --upload <file>  |  upload file to transfer.sh with GPG encryption\n
+\t-d, --download <url-download>  |  download file from transfer.sh with GPG decryption\n
+\t--del, --delete <url-delete>  |  delete file from transfer.sh\n
+\t-l, --list  |  list all uploaded files from transfer log\n
+\t-e, --edit  |  edit transfer log\n
+\t-c, --clear  |  clear transfer log\n
 \t-h, --help  |  transfer-cli help\n
 \t-v, --version  |  transfer-cli version
+
+===================
+==== ARGUMENTS ====
+===================
+\n\t<file>  |  file to upload to transfer.sh\n
+\t<url-download>  |  url to download file from transfer.sh\n
+\t<url-delete>  |  url to delete file from transfer.sh\n
 
 ==================
 ==== EXAMPLES ====
@@ -194,22 +199,22 @@ case $1 in
 --help)
     transfer-help
     ;;
---upload-gpg)
-    transfer-upload-gpg "$1" "$2"
+-u|--upload)
+    transfer-upload "$1" "$2"
     ;;
---download-gpg)
-    transfer-download-gpg "$1" "$2" "$3"
+-d|--download)
+    transfer-download "$1" "$2" "$3"
     ;;
---delete)
-    transfer-delete "$1" "$2"
+--del|--delete)
+    transfer--delete "$1" "$2"
     ;;
---edit)
+-e|--edit)
     transfer-edit
     ;;
---list)
+-l|--list)
     transfer-list
     ;;
---clear)
+-c|--clear)
     transfer-clear
     ;;
 *)
