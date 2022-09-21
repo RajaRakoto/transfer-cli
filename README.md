@@ -26,6 +26,8 @@ A minimalist command line tool to facilitate "transfer.sh" usage: **upload|downl
 ```bash
 curl https://raw.githubusercontent.com/RajaRakoto/transfer-cli/master/transfer-setup > transfer-setup && chmod +x transfer-setup && ./transfer-setup
 ```
+> NOTE: You can store this command in an alias on your system to install/update transfer-cli more easily
+
 
 ---
 
