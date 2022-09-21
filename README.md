@@ -14,6 +14,8 @@
 
 </div>
 
+https://user-images.githubusercontent.com/50679389/191610129-a5cd546f-de42-40e1-a9f0-ac28fa524d25.mp4
+
 ### 📌 Description
 A minimalist command line tool to facilitate "transfer.sh" usage: **upload|download|delete** files to/from server with GPG encryption/decryption
 
