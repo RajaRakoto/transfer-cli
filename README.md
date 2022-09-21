@@ -15,7 +15,7 @@
 </div>
 
 ### 📌 Description
-A minimalist command line tool to facilitate "transfer.sh" usage: upload|download|delete files to/from server with GPG encryption/decryption
+A minimalist command line tool to facilitate "transfer.sh" usage: **upload|download|delete** files to/from server with GPG encryption/decryption
 
 ---
 
@@ -26,9 +26,53 @@ A minimalist command line tool to facilitate "transfer.sh" usage: upload|downloa
 
 ### 📌 Installation
 ```bash
-wget https://raw.githubusercontent.com/RajaRakoto/transfer-tool/main/transfer-setup.sh && chmod +x transfer-setup.sh && ./transfer-setup.sh && rm transfer-setup.sh
+wget https://raw.githubusercontent.com/RajaRakoto/transfer-cli/master/transfer-setup.sh?token=GHSAT0AAAAAABXI5LRSCA7UFXVDJT4Q23UIYZLM7RQ && chmod +x transfer-setup.sh && ./transfer-setup.sh && rm transfer-setup.sh
 ```
 
 ---
 
+### 📌 Features
+- [x] upload file to transfer.sh with GPG encryption
+- [x] download file from transfer.sh with GPG decryption
+- [x] delete file from transfer.sh
+- [x] list all uploaded files from transfer log
+- [x] edit transfer log
+- [x] clear transfer log
+- [ ] auto update transfer log when file is deleted from transfer.sh
+
+---
+
 ### 📌 Usage
+
+```bash
+transfer-cli [options] [arguments]...
+```
+
+**◾ options**
+
+`-u, --upload <file>`  |  upload file to transfer.sh with GPG encryption
+`-d, --download <url-download>`  |  download file from transfer.sh with GPG decryption
+`--del, --delete <url-delete>`  |  delete file from transfer.sh
+`-l, --list`  |  list all uploaded files from transfer log
+`-e, --edit`  |  edit transfer log
+`-c, --clear`  |  clear transfer log
+`-h, --help`  |  transfer-cli help
+`-v, --version`  |  transfer-cli version
+
+**◾ arguments**
+
+`<file>`  |  file to upload to transfer.sh
+`<url-download>`  |  url to download file from transfer.sh
+`<url-delete>`  |  url to delete file from transfer.sh
+
+**◾ examples**
+
+```bash
+transfer-cli -u file.txt
+```
+```bash
+transfer-cli -d https://transfer.sh/3Q2Zg/file.txt
+```
+```bash
+transfer-cli --del https://transfer.sh/3Q2Zg/file.txt/PHYIiRBAnwap
+```
