@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version=1.0.1
+version=1.0.2
 author='Raja'
 description='A minimalist command line tool to facilitate "transfer.sh" usage: \nupload|download|delete files to/from server with GPG encryption/decryption'
 example="\n\ttransfer-cli -u file.txt\n
