@@ -50,19 +50,19 @@ transfer-cli [options] [arguments]...
 
 **◾ options**
 
-`-u, --upload <file>`  |  upload file to transfer.sh with GPG encryption
-`-d, --download <url-download>`  |  download file from transfer.sh with GPG decryption
-`--del, --delete <url-delete>`  |  delete file from transfer.sh
-`-l, --list`  |  list all uploaded files from transfer log
-`-e, --edit`  |  edit transfer log
-`-c, --clear`  |  clear transfer log
-`-h, --help`  |  transfer-cli help
+`-u, --upload <file>`  |  upload file to transfer.sh with GPG encryption<br>
+`-d, --download <url-download>`  |  download file from transfer.sh with GPG decryption<br>
+`--del, --delete <url-delete>`  |  delete file from transfer.sh<br>
+`-l, --list`  |  list all uploaded files from transfer log<br>
+`-e, --edit`  |  edit transfer log<br>
+`-c, --clear`  |  clear transfer log<br>
+`-h, --help`  |  transfer-cli help<br>
 `-v, --version`  |  transfer-cli version
 
 **◾ arguments**
 
-`<file>`  |  file to upload to transfer.sh
-`<url-download>`  |  url to download file from transfer.sh
+`<file>`  |  file to upload to transfer.sh<br>
+`<url-download>`  |  url to download file from transfer.sh<br>
 `<url-delete>`  |  url to delete file from transfer.sh
 
 **◾ examples**
