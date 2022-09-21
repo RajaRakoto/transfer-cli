@@ -10,7 +10,6 @@ example="\n\ttransfer-cli --upload-gpg file.txt\n
 \ttransfer-cli --clear
 "
 
-### TODO: done
 function transfer-banner() {
     akory -d .005 " _                        __                     _ _ "
     akory -d .005 "| |_ _ __ __ _ _ __  ___ / _| ___ _ __       ___| (_)"
@@ -22,36 +21,30 @@ function transfer-banner() {
     akory -d .02 "Author: $author"
 }
 
-### TODO: done
 function try() {
     [[ $- = *e* ]]
     SAVED_OPT_E=$?
     set +e
 }
 
-### TODO: done
 function throw() {
     exit "$1"
 }
 
-### TODO: done
 function catch() {
     export ex_code=$?
     (($SAVED_OPT_E)) && set +e
     return $ex_code
 }
 
-### TODO: done
 function throwErrors() {
     set -e
 }
 
-### TODO: done
 function transfer-list() {
     cat ~/.transfer.log
 }
 
-### TODO: done
 function transfer-edit() {
     try
     (
@@ -69,7 +62,6 @@ function transfer-edit() {
     }
 }
 
-### TODO: done
 function transfer-clear() {
     read -p "Are you sure to clear transfer log (Y/N)? " -n 1 -r
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -80,7 +72,6 @@ function transfer-clear() {
     fi
 }
 
-### TODO: done
 function transfer-upload-gpg() {
     if [ -z "$2" ]; then
         akory -d .02 "Please provide a file to upload (eg: file.txt)"
@@ -97,10 +88,10 @@ function transfer-upload-gpg() {
             read -p "File description: " file_description
             read -p "Paste the 'x-url-delete' value above: " delete_token
             echo -e "\n=====================================================================" >>~/.transfer.log
-            echo "[URL] -> $(head ~/.transfer.tmp)" >>~/.transfer.log
             echo "[DATE] -> $date" >>~/.transfer.log
             echo "[DESCRIPTION] -> $file_description" >>~/.transfer.log
-            echo "[X-URL-DELETE] -> $delete_token" >>~/.transfer.log
+            echo "[URL-DOWNLOAD] -> $(head ~/.transfer.tmp)" >>~/.transfer.log
+            echo "[URL-DELETE] -> $delete_token" >>~/.transfer.log
             echo -e "=====================================================================" >>~/.transfer.log
             rm ~/.transfer.tmp
             transfer-list
@@ -123,20 +114,19 @@ function transfer-download-gpg() {
     if [ -z "$2" ]; then
         akory -d .02 "Please specify a URL file from transfer.sh (example: https://transfer.sh/XGYxVc/file.txt)"
         exit 1
-    elif [ -z "$3" ]; then
-        akory -d .02 "Please specify a file name to save the downloaded file as (example: file.txt)"
-        exit 1
     fi
+    URL=$2
+    OUTPUT=${URL##*/}
     try
     (
         throwErrors
-        curl -v --progress-bar "$2" | gpg -o- >"$3"
+        curl -v --progress-bar "$2" | gpg -o- >"$OUTPUT"
         akory -d .02 'File downloaded ... [done]'
     )
     catch || {
         case $ex_code in
         *)
-            akory -d .02 'File download ... [failed]'
+            akory -d .02 'File download ... [failed]' && rm "$OUTPUT"
             akory -d .02 'Type "transfer-cli --help" for more information'
             throw $ex_code
             ;;
@@ -144,12 +134,11 @@ function transfer-download-gpg() {
     }
 }
 
-### TODO: get token
+### TODO: add deleted status
 function transfer-delete() {
     curl -X DELETE "$2"
 }
 
-### TODO: done
 function transfer-help() {
     transfer-banner
     echo -e "
@@ -173,14 +162,14 @@ $description
 =================
 ==== OPTIONS ====
 =================
-\n\t--upload-gpg <file> -> upload file to transfer.sh with GPG encryption\n
-\t--download-gpg <url> <file> -> download file from transfer.sh with GPG decryption\n
-\t--delete <url> -> delete file from transfer.sh\n
-\t--list -> list all uploaded files from transfer log\n
-\t--edit -> edit transfer log\n
-\t--clear -> clear transfer log\n
-\t-h, --help -> transfer-cli help\n
-\t-v, --version -> transfer-cli version
+\n\t--upload-gpg <file>  |  upload file to transfer.sh with GPG encryption\n
+\t--download-gpg <url-download>  |  download file from transfer.sh with GPG decryption\n
+\t--delete <url-delete>  |  delete file from transfer.sh\n
+\t--list  |  list all uploaded files from transfer log\n
+\t--edit  |  edit transfer log\n
+\t--clear  |  clear transfer log\n
+\t-h, --help  |  transfer-cli help\n
+\t-v, --version  |  transfer-cli version
 
 ==================
 ==== EXAMPLES ====
@@ -189,7 +178,6 @@ $example
 "
 }
 
-### TODO: working
 case $1 in
 -v)
     akory -d .02 $version
