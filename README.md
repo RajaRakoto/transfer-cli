@@ -15,7 +15,7 @@
 </div>
 
 ### 📌 Description
-A minimalist command line tool to upload | download | delete files to/from transfer.sh server with GPG encryption/decryption
+A minimalist command line tool to facilitate "transfer.sh" usage: upload|download|delete files to/from server with GPG encryption/decryption
 
 ---
 
