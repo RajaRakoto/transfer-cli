@@ -74,3 +74,8 @@ transfer-cli -d https://transfer.sh/3Q2Zg/file.txt
 ```bash
 transfer-cli --del https://transfer.sh/3Q2Zg/file.txt/PHYIiRBAnwap
 ```
+
+<div align="center">
+
+#### Enjoy it 😉
+</div>
