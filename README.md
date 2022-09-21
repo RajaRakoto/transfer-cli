@@ -26,7 +26,7 @@ A minimalist command line tool to facilitate "transfer.sh" usage: **upload|downl
 
 ### 📌 Installation
 ```bash
-wget https://raw.githubusercontent.com/RajaRakoto/transfer-cli/master/transfer-setup.sh?token=GHSAT0AAAAAABXI5LRSCA7UFXVDJT4Q23UIYZLM7RQ && chmod +x transfer-setup.sh && ./transfer-setup.sh && rm transfer-setup.sh
+wget https://raw.githubusercontent.com/RajaRakoto/transfer-cli/master/transfer-setup && chmod +x transfer-setup.sh && ./transfer-setup.sh && rm transfer-setup.sh
 ```
 
 ---
