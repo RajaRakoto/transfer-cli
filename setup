@@ -12,5 +12,5 @@ sudo mv transfer-cli /usr/local/bin/
 echo -e "\n+++ VERSION CHECKING +++"
 sleep 1
 transfer-cli --version
-echo "You just need to relaunch this installation script 'transfer-setup' to update this cli... ENJOY :)"
+echo "You just need to relaunch this installation script 'setup' to update this cli... ENJOY :)"
 
