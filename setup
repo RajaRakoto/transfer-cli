@@ -1,16 +1,22 @@
 #!/bin/bash
 
-echo -e "\n+++ INSTALLING DEPENDENCIES +++"
+echo -e "\n+++ TRANSFER-CLI INSTALLATION +++"
+
+# install deps
 sleep 1
 sudo curl https://raw.githubusercontent.com/gaetan1903/akory/main/akory > /usr/local/bin/akory
 sudo chmod a+rx /usr/local/bin/akory
-echo -e "\n+++ TRANSFER-CLI INSTALLATION +++"
+akory -d 0.02 "install deps ... [done]"
+
+# download transfer-cli from repository
 sleep 1
-sudo curl https://raw.githubusercontent.com/RajaRakoto/transfer-cli/master/transfer-cli > transfer-cli
-sudo chmod a+rx transfer-cli
-sudo mv transfer-cli /usr/local/bin/
-echo -e "\n+++ VERSION CHECKING +++"
+sudo curl https://raw.githubusercontent.com/RajaRakoto/transfer-cli/master/transfer-cli > /usr/local/bin/transfer-cli
+sudo chmod a+rx /usr/local/bin/transfer-cli
+akory -d 0.02 "INSTALLATION COMPLETED ! ... [done]"
+
+# test
 sleep 1
 transfer-cli --version
-echo "You just need to relaunch this installation script 'setup' to update this cli... ENJOY :)"
 
+# clear
+rm -rf setup
