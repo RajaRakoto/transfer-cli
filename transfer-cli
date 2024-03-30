@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version=1.0.4
+version=1.0.5
 author='Raja'
 description='A minimalist command line tool to facilitate "transfer.sh" usage: \nupload|download|delete files to/from server with GPG encryption/decryption'
 example="\n\ttransfer-cli -u file.txt\n
@@ -145,7 +145,7 @@ function transfer-help() {
 ==== DESCRIPTION ====
 =====================
 
-$description                                                                                     
+$description
 ----------------------------------------------------------------------------------------------------
 | NOTE 1: Make sure you have 'gpg' installed and configured on your system.                        |
 | NOTE 2: Make sure you have 'curl' installed on your system.                                      |
