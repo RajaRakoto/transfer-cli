@@ -1,40 +1,34 @@
-<div align="center">
+# transfer-cli 🖧
 
-## TRANSFER-CLI
+[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/for-you.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/open-source.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/uses-git.svg)](https://forthebadge.com) [![forthebadge](https://github.com/RajaRakoto/github-docs/blob/master/badge/build-by.svg?raw=true)](https://forthebadge.com)
 
-<div align="center">
-<img src="https://github.com/RajaRakoto/github-docs/blob/master/dago.gif?raw=true" width=40>
-</div>
+![Git](https://img.shields.io/badge/-Git-777?style=flat&logo=git&logoColor=F05032&labelColor=ffffff) ![Gitub](https://img.shields.io/badge/-Gitub-777?style=flat&logo=github&logoColor=777&labelColor=ffffff)
 
-<br>
+A minimalist command line tool to facilitate "transfer.sh" usage: **upload | download | delete** files to/from server with GPG encryption/decryption
 
-[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/for-you.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/open-source.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/uses-git.svg)](https://forthebadge.com) [![forthebadge](https://github.com/RajaRakoto/github-docs/blob/master/badge/for-dago.svg?raw=true)](https://forthebadge.com) [![forthebadge](https://github.com/RajaRakoto/github-docs/blob/master/badge/build-by.svg?raw=true)](https://forthebadge.com)
-
-![Bash](https://img.shields.io/badge/-Bash-777?style=flat&logo=shell&logoColor=green&labelColor=ffffff) ![Git](https://img.shields.io/badge/-Git-777?style=flat&logo=git&logoColor=F05032&labelColor=ffffff) ![Github](https://img.shields.io/badge/-Github-777?style=flat&logo=github&logoColor=777&labelColor=ffffff)
-
-</div>
+> **Transfer.sh** is a command line utility and public file sharing service. It allows you to upload files from the command line and share them with anyone you want. It is a free, open source, minimalist, and fast service.
 
 https://user-images.githubusercontent.com/50679389/191610129-a5cd546f-de42-40e1-a9f0-ac28fa524d25.mp4
 
-### 📌 Description
-
-A minimalist command line tool to facilitate "transfer.sh" usage: **upload|download|delete** files to/from server with GPG encryption/decryption
-
-**About transfer.sh**<br> `Transfer.sh` is a command line utility and public file sharing service. It allows you to upload files from the command line and share them with anyone you want. It is a free, open source, minimalist, and fast service.
-
 ---
 
-### 📌 Installation
+### 📌 Usage
+
+Run the following command to install transfer-cli (Linux only):
 
 ```bash
 curl https://raw.githubusercontent.com/RajaRakoto/transfer-cli/master/setup > setup && chmod +x setup && ./setup
 ```
 
-> NOTE: You can store this command in an alias on your system to install/update transfer-cli more easily
+Uninstall transfer-cli (Linux only):
+
+```bash
+sudo rm -r "$HOME/.ha_env" /usr/local/bin/transfer-cli
+```
 
 ---
 
-### 📌 Features
+### 📌 Todo
 
 - [x] upload file to transfer.sh with GPG encryption
 - [x] download file from transfer.sh with GPG decryption
@@ -46,21 +40,21 @@ curl https://raw.githubusercontent.com/RajaRakoto/transfer-cli/master/setup > se
 
 ---
 
-### 📌 Usage
+### 📌 Features
 
 ```bash
 transfer-cli [options] [arguments]...
 ```
 
-**◾ options**
+**Options**
 
 `-u, --upload <file>` | upload file to transfer.sh with GPG encryption<br> `-d, --download <url-download>` | download file from transfer.sh with GPG decryption<br> `--del, --delete <url-delete>` | delete file from transfer.sh<br> `-l, --list` | list all uploaded files from transfer log<br> `-e, --edit` | edit transfer log<br> `-c, --clear` | clear transfer log<br> `-h, --help` | transfer-cli help<br> `-v, --version` | transfer-cli version
 
-**◾ arguments**
+**Arguments**
 
 `<file>` | file to upload to transfer.sh<br> `<url-download>` | url to download file from transfer.sh<br> `<url-delete>` | url to delete file from transfer.sh
 
-**◾ examples**
+**Examples**
 
 ```bash
 transfer-cli -u file.txt
@@ -73,9 +67,3 @@ transfer-cli -d https://transfer.sh/3Q2Zg/file.txt
 ```bash
 transfer-cli --del https://transfer.sh/3Q2Zg/file.txt/PHYIiRBAnwap
 ```
-
-<div align="center">
-
-#### Enjoy it 😉
-
-</div>
